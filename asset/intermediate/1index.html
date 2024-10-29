@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body { display: flex; justify-content:center; align-items: center; height: 100vh; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; margin:auto; }
+        .calculator { width: 180px; }
+        .display { width: 100%; height: 40px; text-align: right; font-size: 1.2em; padding: 5px; margin-bottom: 10px; }
+        .btn { width: 45px; height: 45px; font-size: 2em; margin: 2px; }
+        .row { display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" class="display" disabled />
+        <div class="row">
+            <button class="btn" onclick="press('7')">7</button>
+            <button class="btn" onclick="press('8')">8</button>
+            <button class="btn" onclick="press('9')">9</button>
+            <button class="btn" onclick="setOp('/')">/</button>
+        </div>
+        <div class="row">
+            <button class="btn" onclick="press('4')">4</button>
+            <button class="btn" onclick="press('5')">5</button>
+            <button class="btn" onclick="press('6')">6</button>
+            <button class="btn" onclick="setOp('*')">*</button>
+        </div>
+        <div class="row">
+            <button class="btn" onclick="press('1')">1</button>
+            <button class="btn" onclick="press('2')">2</button>
+            <button class="btn" onclick="press('3')">3</button>
+            <button class="btn" onclick="setOp('-')">-</button>
+        </div>
+        <div class="row">
+            <button class="btn" onclick="press('0')">0</button>
+            <button class="btn" onclick="clearDisplay()">C</button>
+            <button class="btn" onclick="calculate()">=</button>
+            <button class="btn" onclick="setOp('+')">+</button>
+        </div>
+    </div>
+
+    <script>
+        let current = '', previous = '', operator = '';
+
+        function press(num) {
+            current += num;
+            document.getElementById('display').value = current;
+        }
+
+        function setOp(op) {
+            if (current) {
+                operator = op;
+                previous = current;
+                current = '';
+                document.getElementById('display').value = previous + ' ' + operator;
+            }
+        }
+
+        function calculate() {
+            if (previous && current && operator) {
+                current = eval(previous + operator + current).toString();
+                operator = '';
+                previous = '';
+                document.getElementById('display').value = current;
+            }
+        }
+
+        function clearDisplay() {
+            current = '';
+            previous = '';
+            operator = '';
+            document.getElementById('display').value = '0';
+        }
+    </script>
+</body>
+</html>
